@@ -8,3 +8,11 @@ export class CreateTodoDto {
     @IsIn([0, 1])
     isDone: number;
 }
+
+export class CreateUserDto {
+    @IsNotEmpty()
+    username: string;
+
+    @IsNotEmpty()
+    password: string;
+}

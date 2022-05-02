@@ -21,3 +21,16 @@ export class TodoEntity{
     @DeleteDateColumn({name: 'deleted_at'})
     deletedAt: string;
 }
+
+@Entity({name: 'users'})
+export class UsersEntity{
+    
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column()
+    username: string;
+
+    @Column()
+    password: string;
+}

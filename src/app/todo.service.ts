@@ -5,6 +5,9 @@ import { CreateTodoDto } from "./dto/create-todo.dto";
 import { UpdateTodoDto } from "./dto/update-todo.dto";
 import { TodoEntity } from "./entity/todo.entity";
 
+import { UsersEntity } from "./entity/todo.entity";
+import { CreateUserDto } from "./dto/create-todo.dto";
+
 @Injectable()
 export class TodoService{
     constructor(
@@ -41,4 +44,25 @@ export class TodoService{
 
         await this.todoRepository.softDelete(id)
     }
+}
+
+@Injectable()
+export class UsersService{
+    constructor(
+        @InjectRepository(UsersEntity)
+        private readonly usersRepository: Repository<UsersEntity>,
+    ) {}
+
+    async findOneOrFail(id: number) {
+        try{
+            return this.usersRepository.findOneOrFail(id)
+        }
+        catch(error){
+            throw new NotFoundException(error.message);
+        }
+    }
+    async create(data: CreateUserDto) {
+        return await this.usersRepository.save(this.usersRepository.create(data))
+    }
+    
 }
