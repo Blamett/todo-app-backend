@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { UserEntity } from "./user.entity";
 
 @Entity({name: 'todos'})
 export class TodoEntity{
@@ -20,17 +21,7 @@ export class TodoEntity{
 
     @DeleteDateColumn({name: 'deleted_at'})
     deletedAt: string;
-}
 
-@Entity({name: 'users'})
-export class UsersEntity{
-    
-    @PrimaryGeneratedColumn()
-    id: number;
-
-    @Column()
-    username: string;
-
-    @Column()
-    password: string;
+    @ManyToOne(() => UserEntity, (user) => user.todos)
+    user: UserEntity
 }
