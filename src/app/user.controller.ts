@@ -1,20 +1,22 @@
 import { Body, Controller, Get, Param, Post} from "@nestjs/common";
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
+import { IsPublic } from "./decorators/is-public.decorator";
 
 
-@Controller('api/v1/users')
+@Controller('user')
 export class UserController {
     constructor(private readonly userService: UserService) { }
 
+    @IsPublic()
     @Post()
     async create(@Body() body: CreateUserDto) {
         return await this.userService.create(body)
     }
 
-    @Get(':id')
-    async show(@Param('id') id: number) {
-        return await this.userService.findOneOrFail(id)
+    @Get(':username')
+    async show(@Param('username') username: string) {
+        return await this.userService.findByUsername(username)
     }
 
 }
