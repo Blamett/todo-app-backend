@@ -13,11 +13,11 @@ import { AppService } from './app.service';
     inject: [ConfigService],
     useFactory: (configServise: ConfigService) => ({
       type: 'mariadb',
-      host: configServise.get('DB_HOST', 'localhost'),
-      port: Number(configServise.get('DB_PORT', 3306)),
-      username: configServise.get('DB_USERNAME', 'root'),
-      password: configServise.get('DB_PASSWORD', '123'),
-      database: configServise.get('DB_DATABASE', 'todo'),
+      host: configServise.get('DB_HOST'),
+      port: Number(configServise.get('DB_PORT')),
+      username: configServise.get('DB_USERNAME'),
+      password: configServise.get('DB_PASSWORD'),
+      database: configServise.get('DB_DATABASE'),
       entities: [__dirname + '/**/*.entity{.js, .ts}'],
       synchronize: true,
     })
