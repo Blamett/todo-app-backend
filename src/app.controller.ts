@@ -15,7 +15,7 @@ export class AppController {
   }
 
 
-  @Get('me')
+  @Get(':me')
   getMe(@CurrentUser() user: UserEntity){
     return user
   }
