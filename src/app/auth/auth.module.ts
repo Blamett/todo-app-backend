@@ -10,7 +10,7 @@ require('dotenv').config()
 
 @Module({
   imports: [UserModule, JwtModule.register({
-    secret: process.env.JWT_SECRET || 'baldinho',
+    secret: process.env.JWT_SECRET,
     signOptions: {expiresIn: '2d'}
   })],
   controllers: [AuthController],
