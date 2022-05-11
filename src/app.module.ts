@@ -3,9 +3,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './app/auth/auth.module';
 import { TodoModule } from './app/todo.modules';
-import { APP_GUARD } from '@nestjs/core';
-import { JwtAuthGuard } from './app/guards/jwt-auth.guards';
-import { AppService } from './app.service';
 
 @Module({
   imports: [TypeOrmModule.forRootAsync({
@@ -27,10 +24,6 @@ import { AppService } from './app.service';
   ],
 
   controllers: [],
-  providers: [AppService,
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },],
+  providers: []
 })
 export class AppModule { }
