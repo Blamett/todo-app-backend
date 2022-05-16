@@ -22,7 +22,7 @@ import {
         context.getHandler(),
         context.getClass(),
       ]);
-  
+      
       if (isPublic) {
         return true;
       }

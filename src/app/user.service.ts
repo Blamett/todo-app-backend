@@ -22,7 +22,7 @@ export class UserService {
         }
     }
 
-    async create(createUserDto: CreateUserDto) {
+    async create(createUserDto: CreateUserDto): Promise<UserEntity> {
         const data = {
             ...createUserDto,
             password: await bcrypt.hash(createUserDto.password, 10),

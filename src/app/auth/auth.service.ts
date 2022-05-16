@@ -10,17 +10,15 @@ import { UserToken } from '../models/UserToke';
 export class AuthService {
     constructor(private readonly userService: UserService, private readonly jwtService: JwtService) {}
 
-    login(user: UserEntity): UserToken {
+    async login(user: UserEntity): Promise<UserToken> {
         
         const payload: UserPayload = {
             sub: user.id,
             username: user.username
         };
 
-        const jwtToken  = this.jwtService.sign(payload)
-
         return{
-            access_token: jwtToken
+            access_token: this.jwtService.sign(payload)
         }
     }
 

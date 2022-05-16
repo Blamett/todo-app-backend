@@ -1,9 +1,11 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { CurrentUser } from "./decorators/current-user.decorator";
 import { CreateTodoDto } from "./dto/create-todo.dto";
 import { UpdateTodoDto } from "./dto/update-todo.dto";
 import { TodoEntity } from "./entity/todo.entity";
+import { UserEntity } from "./entity/user.entity";
 
 @Injectable()
 export class TodoService{
@@ -16,6 +18,10 @@ export class TodoService{
         return await this.todoRepository.find()
     }
 
+    async findByUser(id: number) {
+        return await this.todoRepository.find({ where: {user:id}} || {where: {deletedAt:null}})
+    }
+
     async findOneOrFail(id: string) {
         try{
             return this.todoRepository.findOneOrFail(id)
@@ -25,7 +31,8 @@ export class TodoService{
         }
     }
 
-    async create(data: CreateTodoDto) {
+    async create(data: CreateTodoDto, @CurrentUser()user?: UserEntity) {
+        console.log(user)
         return await this.todoRepository.save(this.todoRepository.create(data))
     }
     

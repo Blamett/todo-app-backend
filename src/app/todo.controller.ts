@@ -12,6 +12,11 @@ export class TodoController {
         return await this.todoService.findAll()
     }
 
+    @Get(':id')
+    async findById(@Param('id') id: number) {
+        return await this.todoService.findByUser(id)
+    }
+
     @Post()
     async create(@Body() body: CreateTodoDto) {
         return await this.todoService.create(body)
