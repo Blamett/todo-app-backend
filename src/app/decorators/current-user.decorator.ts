@@ -6,8 +6,6 @@ export const CurrentUser = createParamDecorator(
   (data: unknown, context: ExecutionContext): UserEntity => {
     const request = context.switchToHttp().getRequest<AuthRequest>();
 
-    console.log(context, 1)
-
     return request.user;
 
   },

@@ -12,13 +12,16 @@ export class AuthService {
 
     async login(user: UserEntity): Promise<UserToken> {
         
-        const payload: UserPayload = {
+        let payload: UserPayload = {
             sub: user.id,
             username: user.username
         };
 
+        let token = this.jwtService.sign(payload);
+
+
         return{
-            access_token: this.jwtService.sign(payload)
+            access_token: token
         }
     }
 

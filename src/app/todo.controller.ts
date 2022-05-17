@@ -12,7 +12,7 @@ export class TodoController {
     @Get()
     async index(@CurrentUser() user: UserEntity) {
         return await this.todoService.findAll(user.id)
-        
+
     }
 
     @Post()
@@ -26,8 +26,8 @@ export class TodoController {
     }
 
     @Put(':id')
-    async update(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: UpdateTodoDto) {
-        return await this.todoService.update(id, body)
+    async update(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: UpdateTodoDto, @CurrentUser() user: UserEntity) {
+        return await this.todoService.update(id, body, user)
     }
 
     @Delete(':id')
