@@ -1,6 +1,8 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Put } from "@nestjs/common";
+import { CurrentUser } from "./decorators/current-user.decorator";
 import { CreateTodoDto } from "./dto/create-todo.dto";
 import { UpdateTodoDto } from "./dto/update-todo.dto";
+import { UserEntity } from "./entity/user.entity";
 import { TodoService } from "./todo.service";
 
 @Controller('todos')
@@ -8,18 +10,14 @@ export class TodoController {
     constructor(private readonly todoService: TodoService) { }
 
     @Get()
-    async index() {
-        return await this.todoService.findAll()
-    }
-
-    @Get(':id')
-    async findById(@Param('id') id: number) {
-        return await this.todoService.findByUser(id)
+    async index(@CurrentUser() user: UserEntity) {
+        return await this.todoService.findAll(user.id)
+        
     }
 
     @Post()
-    async create(@Body() body: CreateTodoDto) {
-        return await this.todoService.create(body)
+    async create(@Body() body: CreateTodoDto, @CurrentUser() user: UserEntity) {
+        return await this.todoService.create(body, user)
     }
 
     @Get(':id')
