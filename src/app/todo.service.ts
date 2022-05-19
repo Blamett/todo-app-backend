@@ -18,7 +18,7 @@ export class TodoService {
 
     async findAll(id: number) {
 
-        return await this.todoRepository.find({ where: { user: { id } } })
+        return await this.todoRepository.find({ where: { user: { id } }, order:{createdAt: -1} })
     }
 
     async findOneOrFail(id: string) {
