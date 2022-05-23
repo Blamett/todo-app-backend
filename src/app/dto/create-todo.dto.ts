@@ -1,8 +1,10 @@
-import { IsIn, IsNotEmpty } from "class-validator";
+import { IsIn, IsNotEmpty, MaxLength, MinLength } from "class-validator";
 import { UserEntity } from "../entity/user.entity";
 
 export class CreateTodoDto {
     @IsNotEmpty()
+    @MinLength(1)
+    @MaxLength(62)
     task: string;
 
     @IsNotEmpty()

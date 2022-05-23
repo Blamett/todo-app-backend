@@ -35,7 +35,7 @@ export class TodoService {
         return await this.todoRepository.save(this.todoRepository.create(data))
     }
 
-    async update(id: string, data: UpdateTodoDto,  user: UserEntity) {
+    async update(id: string, data: Partial<UpdateTodoDto>,  user: UserEntity) {
         const todo = await this.findOneOrFail(id);
         data.user = user;
 
