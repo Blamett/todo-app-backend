@@ -1,7 +1,10 @@
-import { IsNotEmpty, IsNotIn, IsString, Matches, MaxLength, MinLength } from "class-validator";
-import { UserService } from "../user.service";
+import { IsEmail, IsNotEmpty, IsNotIn, IsString, Matches, MaxLength, MinLength } from "class-validator";
 
 export class CreateUserDto {
+    @IsEmail()
+    @IsNotEmpty()
+    email: string;
+
     @IsNotEmpty()
     @IsString()
     username: string;
