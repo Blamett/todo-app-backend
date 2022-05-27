@@ -42,4 +42,5 @@ export class AuthService {
         // nao encontrou user / password n corresponde
         throw new Error('Email address or password provided is incorrect')
     }
+
 }

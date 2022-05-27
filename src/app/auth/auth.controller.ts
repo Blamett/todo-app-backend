@@ -1,20 +1,13 @@
-import { Controller, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { IsPublic } from '../decorators/is-public.decorator';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { AuthRequest } from '../models/AuthRequest';
+import { CreateEmailDto } from '../dto/create-email-dto';
 
 @Controller('login')
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
-
-  // @IsPublic()
-  // @UseGuards(LocalAuthGuard)
-  // @Post()
-  // @HttpCode(HttpStatus.OK)
-  // async login(@Body('user') user: UserEntity) {
-  //   return this.authService.login(user);
-  // }
 
   @IsPublic()
   @Post()
@@ -23,4 +16,6 @@ export class AuthController {
   async login(@Request() req: AuthRequest) {
     return this.authService.login(req.user);
   }
+
 }
+

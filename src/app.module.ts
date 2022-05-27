@@ -6,6 +6,7 @@ import { AuthModule } from './app/auth/auth.module';
 import { JwtAuthGuard } from './app/guards/jwt-auth.guards';
 import { TodoModule } from './app/todo.modules';
 import { UserModule } from './app/user.module';
+import { NodemailerModule } from './nodemailer/nodemailer.module';
 
 @Module({
   imports: [TypeOrmModule.forRootAsync({
@@ -25,6 +26,7 @@ import { UserModule } from './app/user.module';
     UserModule,
     TodoModule,
     AuthModule,
+    NodemailerModule,
   ],
 
   controllers: [],

@@ -5,6 +5,7 @@ import { Repository } from "typeorm";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UserEntity } from "./entity/user.entity";
 
+
 @Injectable()
 export class UserService {
 
@@ -40,4 +41,7 @@ export class UserService {
         return this.usersRepository.findOneOrFail({ username });
     }
 
+    async findByEmail(email: string) {
+        return this.usersRepository.findOne({ email });
+    }
 }
