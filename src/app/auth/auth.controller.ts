@@ -1,9 +1,8 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Request, UseGuards } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { Controller, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
 import { IsPublic } from '../decorators/is-public.decorator';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { AuthRequest } from '../models/AuthRequest';
-import { CreateEmailDto } from '../dto/create-email-dto';
+import { AuthService } from './auth.service';
 
 @Controller('login')
 export class AuthController {

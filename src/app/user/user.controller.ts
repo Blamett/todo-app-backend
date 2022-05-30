@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Param, Post} from "@nestjs/common";
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { UserService } from "./user.service";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { IsPublic } from "./decorators/is-public.decorator";
+import { CreateUserDto } from "../dto/create-user.dto";
+import { IsPublic } from "../decorators/is-public.decorator";
 
 
 @Controller('user')

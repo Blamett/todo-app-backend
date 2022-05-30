@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/app/user.service';
+import { UserService } from 'src/app/user/user.service';
 import * as nodemailer from 'nodemailer';
 
 @Injectable()

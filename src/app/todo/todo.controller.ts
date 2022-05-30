@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post, Put } from "@nestjs/common";
-import { CurrentUser } from "./decorators/current-user.decorator";
-import { CreateTodoDto } from "./dto/create-todo.dto";
-import { UpdateTodoDto } from "./dto/update-todo.dto";
-import { UserEntity } from "./entity/user.entity";
+import { CurrentUser } from "../decorators/current-user.decorator";
+import { CreateTodoDto } from "../dto/create-todo.dto";
+import { UpdateTodoDto } from "../dto/update-todo.dto";
+import { UserEntity } from "../entity/user.entity";
 import { TodoService } from "./todo.service";
 
 @Controller('todos')

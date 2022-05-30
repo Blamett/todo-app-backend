@@ -1,13 +1,10 @@
-import { ExecutionContext, Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { REQUEST } from "@nestjs/core";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { userInfo } from "os";
 import { Repository } from "typeorm";
-import { CurrentUser } from "./decorators/current-user.decorator";
-import { CreateTodoDto } from "./dto/create-todo.dto";
-import { UpdateTodoDto } from "./dto/update-todo.dto";
-import { TodoEntity } from "./entity/todo.entity";
-import { UserEntity } from "./entity/user.entity";
+import { CreateTodoDto } from "../dto/create-todo.dto";
+import { UpdateTodoDto } from "../dto/update-todo.dto";
+import { TodoEntity } from "../entity/todo.entity";
+import { UserEntity } from "../entity/user.entity";
 
 @Injectable()
 export class TodoService {
@@ -18,7 +15,7 @@ export class TodoService {
 
     async findAll(id: number) {
 
-        return await this.todoRepository.find({ where: { user: { id } }, order:{createdAt: -1} })
+        return await this.todoRepository.find({ where: { user: { id } }, order: { createdAt: -1 } })
     }
 
     async findOneOrFail(id: string) {
@@ -35,7 +32,7 @@ export class TodoService {
         return await this.todoRepository.save(this.todoRepository.create(data))
     }
 
-    async update(id: string, data: Partial<UpdateTodoDto>,  user: UserEntity) {
+    async update(id: string, data: Partial<UpdateTodoDto>, user: UserEntity) {
         const todo = await this.findOneOrFail(id);
         data.user = user;
 

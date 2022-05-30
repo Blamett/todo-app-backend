@@ -4,9 +4,9 @@ import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './app/auth/auth.module';
 import { JwtAuthGuard } from './app/guards/jwt-auth.guards';
-import { TodoModule } from './app/todo.modules';
-import { UserModule } from './app/user.module';
-import { NodemailerModule } from './nodemailer/nodemailer.module';
+import { TodoModule } from './app/todo/todo.modules';
+import { UserModule } from './app/user/user.module';
+import { NodemailerModule } from './app/pass-recovery/password-recovery.module';
 
 @Module({
   imports: [TypeOrmModule.forRootAsync({
