@@ -44,4 +44,8 @@ export class UserService {
     async findByEmail(email: string) {
         return this.usersRepository.findOne({ email });
     }
+
+    async returnId(email: string) {
+        return this.usersRepository.findOne({ where: { id: { email } } })
+    }
 }

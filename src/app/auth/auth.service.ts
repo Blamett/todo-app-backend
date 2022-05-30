@@ -8,10 +8,10 @@ import { UserToken } from '../models/UserToke';
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly userService: UserService, private readonly jwtService: JwtService) { }
+    constructor(private readonly userService: UserService, private readonly jwtService: JwtService) {}
 
     async login(user: UserEntity): Promise<UserToken> {
-
+        
         let payload: UserPayload = {
             sub: user.id,
             username: user.username
@@ -20,7 +20,7 @@ export class AuthService {
         let token = this.jwtService.sign(payload);
 
 
-        return {
+        return{
             access_token: token
         }
     }
@@ -28,10 +28,10 @@ export class AuthService {
     async validateUser(username: string, password: string) {
         const user = await this.userService.findByUsername(username);
 
-        if (user) {
+        if(user){
             const isPasswordValid = await bcrypt.compare(password, user.password);
 
-            if (isPasswordValid) {
+            if(isPasswordValid){
                 return {
                     ...user,
                     password: undefined,

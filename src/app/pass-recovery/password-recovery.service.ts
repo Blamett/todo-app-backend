@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { UserService } from 'src/app/user/user.service';
 import * as nodemailer from 'nodemailer';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class NodemailerService {
-    constructor(private readonly userService: UserService) { }
+    constructor(private readonly userService: UserService, private readonly jwtService: JwtService) { }
 
     async recoveryPassword(email: string) {
 
@@ -19,11 +20,19 @@ export class NodemailerService {
                 }
             });
 
+            const user = await this.userService.returnId(email);
+
+            let payload = {
+                id: user.id,
+            };
+
+            let token = this.jwtService.sign(payload);
+
             transporter.sendMail({
                 from: '"TodoApp" <no-reply@todoapp.net>',
                 to: `${email}`,
                 subject: "Recovery Password",
-                text: "...",
+                text: `token: ${token}`,
             }).catch(err => console.error(err));
 
         }
