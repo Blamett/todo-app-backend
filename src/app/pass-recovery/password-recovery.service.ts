@@ -3,8 +3,9 @@ import { UserService } from 'src/app/user/user.service';
 import * as nodemailer from 'nodemailer';
 import { JwtService } from '@nestjs/jwt';
 
+
 @Injectable()
-export class NodemailerService {
+export class PasswordRecoveryService {
     constructor(private readonly userService: UserService, private readonly jwtService: JwtService) { }
 
     async recoveryPassword(email: string) {
@@ -20,7 +21,9 @@ export class NodemailerService {
                 }
             });
 
-            const user = await this.userService.returnId(email);
+            const user = await this.userService.findByEmail(email);
+
+            console.log(user);
 
             let payload = {
                 id: user.id,
@@ -32,7 +35,12 @@ export class NodemailerService {
                 from: '"TodoApp" <no-reply@todoapp.net>',
                 to: `${email}`,
                 subject: "Recovery Password",
-                text: `token: ${token}`,
+
+                html: `
+                <label>You have 1 day to recovery your password until the link expires!</label> <br>
+                
+                <a href="http://192.168.90.58:4200/recovery-password?token=${token}">Recovery your password here.</a>`,
+
             }).catch(err => console.error(err));
 
         }

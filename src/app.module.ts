@@ -6,7 +6,8 @@ import { AuthModule } from './app/auth/auth.module';
 import { JwtAuthGuard } from './app/guards/jwt-auth.guards';
 import { TodoModule } from './app/todo/todo.modules';
 import { UserModule } from './app/user/user.module';
-import { NodemailerModule } from './app/pass-recovery/password-recovery.module';
+import { PasswordRecoveryModule } from './app/pass-recovery/password-recovery.module';
+import { ChangePasswordModule } from './app/change-password/change-password.module';
 
 @Module({
   imports: [TypeOrmModule.forRootAsync({
@@ -26,7 +27,8 @@ import { NodemailerModule } from './app/pass-recovery/password-recovery.module';
     UserModule,
     TodoModule,
     AuthModule,
-    NodemailerModule,
+    PasswordRecoveryModule,
+    ChangePasswordModule,
   ],
 
   controllers: [],
