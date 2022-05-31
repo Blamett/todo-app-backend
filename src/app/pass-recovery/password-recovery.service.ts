@@ -23,8 +23,6 @@ export class PasswordRecoveryService {
 
             const user = await this.userService.findByEmail(email);
 
-            console.log(user);
-
             let payload = {
                 id: user.id,
             };
@@ -39,7 +37,7 @@ export class PasswordRecoveryService {
                 html: `
                 <label>You have 1 day to recovery your password until the link expires!</label> <br>
                 
-                <a href="http://192.168.90.58:4200/recovery-password?token=${token}">Recovery your password here.</a>`,
+                <a href="http://192.168.90.58:4200/recovery-password?token=${token}">Recovery your password here</a>`,
 
             }).catch(err => console.error(err));
 
