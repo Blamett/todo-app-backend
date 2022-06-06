@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post, Put } from "@nestjs/common";
 import { CurrentUser } from "../decorators/current-user.decorator";
 import { CreateTodoDto } from "../dto/create-todo.dto";
+import { OrderTodoDto } from "../dto/order-todos-dto";
 import { UpdateTodoDto } from "../dto/update-todo.dto";
 import { UserEntity } from "../entity/user.entity";
 import { TodoService } from "./todo.service";
@@ -20,6 +21,11 @@ export class TodoController {
         return await this.todoService.create(body, user)
     }
 
+    @Post('order')
+    async order(@Body() body: OrderTodoDto, @CurrentUser() user: UserEntity) {
+        return await this.todoService.currentOrder(body.previousIndex, body.currentIndex, user.id)
+    }
+
     @Get(':id')
     async show(@Param('id', new ParseUUIDPipe()) id: string) {
         return await this.todoService.findOneOrFail(id)
@@ -37,7 +43,7 @@ export class TodoController {
 
     @Delete(':id')
     @HttpCode(HttpStatus.NO_CONTENT)
-    async destroy(@Param('id', new ParseUUIDPipe()) id: string) {
-        await this.todoService.deletById(id)
+    async destroy(@Param('id', new ParseUUIDPipe()) id: string, @CurrentUser() user: UserEntity) {
+        await this.todoService.deletById(id, user)
     }
 }

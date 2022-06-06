@@ -13,6 +13,12 @@ export class TodoEntity {
     @Column({ name: 'is_done', type: 'tinyint', width: 1 })
     isDone: number;
 
+    @Column({ name: 'current_position'})
+    currentPosition: number;
+
+    // @Column({ name: 'previous_position'})
+    // previousPosition: number;
+
     @CreateDateColumn({ name: 'created_at' })
     createdAt: string;
 

@@ -1,4 +1,4 @@
-import { IsIn, IsNotEmpty, MaxLength, MinLength } from "class-validator";
+import { IsIn, IsInt, IsNotEmpty, IsOptional, MaxLength, MinLength } from "class-validator";
 import { UserEntity } from "../entity/user.entity";
 
 export class CreateTodoDto {
@@ -12,4 +12,8 @@ export class CreateTodoDto {
     isDone: number;
 
     user: UserEntity;
+
+    @IsInt()
+    @IsOptional()
+    currentPosition: number;
 }

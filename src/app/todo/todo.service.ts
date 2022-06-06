@@ -15,7 +15,7 @@ export class TodoService {
 
     async findAll(id: number) {
 
-        return await this.todoRepository.find({ where: { user: { id } }, order: { createdAt: -1 } })
+        return await this.todoRepository.find({ where: { user: { id } }, order: { currentPosition: 1 } })
     }
 
     async findOneOrFail(id: string) {
@@ -28,7 +28,16 @@ export class TodoService {
     }
 
     async create(data: CreateTodoDto, user: UserEntity) {
+
         data.user = user;
+        data.currentPosition = 0;
+
+        await this.todoRepository.query(`
+            UPDATE todos
+               SET current_position = current_position + 1 
+             WHERE userId = ${user.id};
+        `);
+
         return await this.todoRepository.save(this.todoRepository.create(data))
     }
 
@@ -40,9 +49,44 @@ export class TodoService {
         return await this.todoRepository.save(todo)
     }
 
-    async deletById(id: string) {
-        await this.findOneOrFail(id)
+    async deletById(id: string, user: UserEntity) {
+        const todo = await this.findOneOrFail(id)
 
-        await this.todoRepository.softDelete(id)
+        await this.todoRepository.query(`
+        UPDATE todos
+           SET current_position = current_position - 1 
+        WHERE 
+            current_position > ${todo.currentPosition}
+
+            AND
+
+            userId = ${user.id};
+        `);
+
+        await this.todoRepository.softDelete(todo.id)
+    }
+
+    async currentOrder(previousIndex: number, currentIndex: number, userId: number) {
+
+        const arr = await this.findAll(userId)
+
+        const todoMovido = arr.find(todo => todo.currentPosition === previousIndex);
+
+        if (currentIndex < previousIndex) {
+
+            const todosInc1 = arr.filter(todo => todo.currentPosition >= currentIndex && todo.currentPosition < previousIndex);
+            todosInc1.forEach(each => each.currentPosition++);
+            await this.todoRepository.save(todosInc1);
+
+        } else if (currentIndex > previousIndex) {
+
+            const todosDec1 = arr.filter(todo => todo.currentPosition <= currentIndex && todo.currentPosition > previousIndex);
+            todosDec1.forEach(each => each.currentPosition--);
+            await this.todoRepository.save(todosDec1);
+
+        }
+
+        todoMovido.currentPosition = currentIndex;
+        return await this.todoRepository.save(todoMovido);
     }
 }
