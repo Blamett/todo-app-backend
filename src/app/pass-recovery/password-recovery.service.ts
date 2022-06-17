@@ -17,7 +17,7 @@ export class PasswordRecoveryService {
                 service: 'gmail',
                 auth: {
                     user: 'noreply.todoapp123@gmail.com',
-                    pass: 'Todoapp@123'
+                    pass: 'ylviubcjrdsbqjsd'
                 }
             });
 

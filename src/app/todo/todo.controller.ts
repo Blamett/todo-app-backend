@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post, Put, Query } from "@nestjs/common";
 import { CurrentUser } from "../decorators/current-user.decorator";
 import { CreateTodoDto } from "../dto/create-todo.dto";
 import { OrderTodoDto } from "../dto/order-todos-dto";
@@ -11,9 +11,12 @@ export class TodoController {
     constructor(private readonly todoService: TodoService) { }
 
     @Get()
-    async index(@CurrentUser() user: UserEntity) {
-        return await this.todoService.findAll(user.id)
-
+    async index(
+        @CurrentUser() user: UserEntity,
+        @Query('page') page?: number,
+        @Query('limit') limit?: number,
+    ) {
+        return await this.todoService.findAll(user.id, page, limit)
     }
 
     @Post()

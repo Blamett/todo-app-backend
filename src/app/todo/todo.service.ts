@@ -13,9 +13,26 @@ export class TodoService {
         private readonly todoRepository: Repository<TodoEntity>,
     ) { }
 
-    async findAll(id: number) {
+    async findAll(id: number, page?: number, limit?: number) {
 
-        return await this.todoRepository.find({ where: { user: { id } }, order: { currentPosition: 1 } })
+        page = page ?? 1;
+
+        limit = limit ?? 12;
+
+        const offset = page * limit
+
+        const [todos, count] = await this.todoRepository.findAndCount({
+            where: { user: { id } },
+            order: { currentPosition: 1 },
+            skip: offset,
+            take: limit,
+        });
+
+        return {
+            todos,
+            count
+        }
+
     }
 
     async findOneOrFail(id: string) {
@@ -35,7 +52,8 @@ export class TodoService {
         await this.todoRepository.query(`
             UPDATE todos
                SET current_position = current_position + 1 
-             WHERE userId = ${user.id};
+             WHERE userId = ${user.id}
+               AND deleted_at IS NULL;
         `);
 
         return await this.todoRepository.save(this.todoRepository.create(data))
@@ -60,7 +78,9 @@ export class TodoService {
 
             AND
 
-            userId = ${user.id};
+            userId = ${user.id}
+            
+            AND deleted_at IS NULL;
         `);
 
         await this.todoRepository.softDelete(todo.id)
@@ -68,7 +88,8 @@ export class TodoService {
 
     async currentOrder(previousIndex: number, currentIndex: number, userId: number) {
 
-        const arr = await this.findAll(userId)
+        const naoFacamIssoEmCasaCriancas = await this.findAll(userId);
+        const arr = naoFacamIssoEmCasaCriancas.todos;
 
         const todoMovido = arr.find(todo => todo.currentPosition === previousIndex);
 
