@@ -15,10 +15,6 @@ export class TodoService {
 
     async findAll(id: number, page?: number, limit?: number) {
 
-        page = page ?? 1;
-
-        limit = limit ?? 12;
-
         const offset = page * limit
 
         const [todos, count] = await this.todoRepository.findAndCount({
@@ -90,6 +86,8 @@ export class TodoService {
 
         const naoFacamIssoEmCasaCriancas = await this.findAll(userId);
         const arr = naoFacamIssoEmCasaCriancas.todos;
+
+        console.log(userId, arr)
 
         const todoMovido = arr.find(todo => todo.currentPosition === previousIndex);
 
