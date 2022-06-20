@@ -15,9 +15,6 @@ export class TodoService {
 
     async findAll(id: number, page?: number, limit?: number) {
 
-        page = page ?? 1;
-
-        limit = limit ?? 12;
 
         const offset = page * limit
 
