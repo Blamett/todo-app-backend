@@ -1,4 +1,4 @@
-import { Controller, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
 import { IsPublic } from '../decorators/is-public.decorator';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { AuthRequest } from '../models/AuthRequest';
