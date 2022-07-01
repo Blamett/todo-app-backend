@@ -16,7 +16,7 @@ require('dotenv').config()
     TypeOrmModule.forFeature([UserEntity]),
     JwtModule.register({
     secret: process.env.JWT_SECRET,
-    signOptions: { expiresIn: '2d' }
+    signOptions: { expiresIn: '1d' }
   })
 ],
   providers: [ChangePasswordService],
